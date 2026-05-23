@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Source Code
+      - name: Checkout App Repository
         uses: actions/checkout@v4
 
       - name: Login to DockerHub
@@ -22,9 +22,26 @@ jobs:
       - name: Build Docker Image
         run: |
           docker build -t shivawmm1810/quote-app:${{ github.sha }} .
-          docker tag shivawmm1810/quote-app:${{ github.sha }} shivawmm1810/quote-app:latest
-
-      - name: Push Docker Image
-        run: |
           docker push shivawmm1810/quote-app:${{ github.sha }}
-          docker push shivawmm1810/quote-app:latest
+
+      - name: Clone GitOps Repository
+        run: |
+          git clone https://x-access-token:${{ secrets.GITOPS_TOKEN }}@github.com/shivawmm/helm-flux-gitops.git
+
+      - name: Update Helm Values Tag
+        run: |
+          cd helm-flux-gitops/quote-app
+
+          sed -i 's/tag:.*/tag: "${{ github.sha }}"/' values.yaml
+
+      - name: Commit and Push Changes
+        run: |
+          cd helm-flux-gitops
+
+          git config user.email "github-actions@github.com"
+          git config user.name "github-actions"
+
+          git add .
+          git commit -m "Update image tag to ${{ github.sha }}" || echo "No changes"
+
+          git push

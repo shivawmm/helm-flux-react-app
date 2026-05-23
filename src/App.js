@@ -24,7 +24,7 @@ function App() {
 
         <div className="info">
           <p><strong>Environment:</strong> Development</p>
-          <p><strong>Version:</strong> v1</p>
+          <p><strong>Version:</strong> v2</p>
           <p><strong>Platform:</strong> Kubernetes + FluxCD</p>
         </div>
 

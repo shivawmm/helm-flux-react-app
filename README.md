@@ -626,6 +626,83 @@ flux reconcile source git helm-flux-gitops
 
 ---
 
+# Minikube Full Restart Workflow
+
+## 1. Start Minikube Cluster
+
+```powershell
+minikube start --driver=docker
+```
+
+---
+
+## 2. Verify Kubernetes Node
+
+```powershell
+kubectl get nodes
+```
+
+Expected Output:
+
+```text
+NAME       STATUS   ROLES           AGE   VERSION
+minikube   Ready    control-plane   ...   ...
+```
+
+`STATUS` should be:
+
+```text
+Ready
+```
+
+---
+
+## 3. Verify All Workloads
+
+```powershell
+kubectl get pods -A
+```
+
+This verifies:
+- FluxCD pods
+- ArgoCD pods
+- ingress controller
+- application pods
+- Kubernetes system components
+
+---
+
+## 4. Start Minikube Tunnel
+
+> Open PowerShell as **Administrator**
+
+Run:
+
+```powershell
+minikube tunnel
+```
+
+Keep this terminal running.
+
+This enables:
+- Ingress access
+- LoadBalancer networking
+- local domain routing
+
+---
+
+## 5. Open Application
+
+Open browser:
+
+```text
+http://quote-app.local
+```
+
+You should now see your application running successfully.
+
+---
+
 # Final Outcome
 
 This project demonstrates:

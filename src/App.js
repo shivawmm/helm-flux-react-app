@@ -18,13 +18,13 @@ function App() {
   return (
     <div className="container">
       <div className="card">
-        <h1>🚀 Helm + FluxCD Demo</h1>
+        <h1>🚀 Helm + FluxCD Demo V3</h1>
 
         <p className="quote">"{quote}"</p>
 
         <div className="info">
           <p><strong>Environment:</strong> Development</p>
-          <p><strong>Version:</strong> v2</p>
+          <p><strong>Version:</strong> v3</p>
           <p><strong>Platform:</strong> Kubernetes + FluxCD</p>
         </div>
 
